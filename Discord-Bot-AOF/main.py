@@ -44,7 +44,15 @@ def log(message):
 
 @client.command()
 async def help(ctx):
-    await ctx.send('WHaY cAn I hElP yOu? (☞ﾟヮﾟ)☞')
+    embed = discord.Embed(
+                title = 'Help',
+                description = 'wHaY cAn I hElP yOu? (☞ﾟヮﾟ)☞',
+                colour = discord.Colour.purple()
+    )
+    embed.add_field(name = '!help', value = 'help', inline = True)
+    embed.add_field(name = '!meal', value = 'meal plan', inline = True)
+    embed.add_field(name = '!weather', value = 'weather', inline = True)
+    await ctx.send(embed = embed)
 
 @client.command()
 async def ping(ctx):
