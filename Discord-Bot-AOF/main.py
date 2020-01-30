@@ -1,6 +1,7 @@
 import os, sys
 import json
 import discord
+import urllib.parse
 from itertools import cycle
 from discord.ext import commands, tasks
 
@@ -46,16 +47,45 @@ def log(message):
 async def help(ctx):
     embed = discord.Embed(
                 title = 'Help',
-                description = 'wHaY cAn I hElP yOu? (☞ﾟヮﾟ)☞',
-                colour = discord.Colour.purple()
+                description = 'wHaT cAn I hElP yOu? (☞ﾟヮﾟ)☞',
+                colour = discord.Colour.from_rgb(126, 214, 223)
     )
-    embed.add_field(name = '!help', value = 'help', inline = True)
-    embed.add_field(name = '!meal', value = 'meal plan', inline = True)
-    embed.add_field(name = '!weather', value = 'weather', inline = True)
+    embed.add_field(name = '**!help**', value = 'Information about this bot', inline = False)
+    embed.add_field(name = '**!meal**', value = 'Provide information about meal plan at Avon Old Farms School', inline = False)
+    embed.add_field(name = '**!weather**', value = 'Weather info at Avon', inline = False)
+    embed.add_field(name = '**!rdimg <topic>**', value = 'Random image', inline = False)
+    embed.add_field(name = '**!ping**', value = 'pong!', inline = False)
+    embed.add_field(name = '**!about**', value = 'About Us', inline = False)
+    embed.set_footer(text = f'Avo by Spencer & HyunJun', icon_url = 'https://github.com/MovoLovo/CafeApp/blob/master/Discord-Bot-AOF/LOGO/Avo%20LOGO.png?raw=true')
+    await ctx.send(embed = embed)
+
+@client.command()
+async def rdimg(ctx, *, topic):
+    embed = discord.Embed(
+                title = 'Topic',
+                description = topic,
+                colour = discord.Colour.from_rgb(255, 195, 18)
+    )
+    embed.set_image(url = f'https://source.unsplash.com/1600x900/?{topic}'.replace(" ", "%20"))
+    embed.set_footer(text = f'Avo by Spencer & HyunJun', icon_url = 'https://github.com/MovoLovo/CafeApp/blob/master/Discord-Bot-AOF/LOGO/Avo%20LOGO.png?raw=true')
     await ctx.send(embed = embed)
 
 @client.command()
 async def ping(ctx):
     await ctx.send(f'{round(client.latency * 1000)}ms')
+
+@client.command()
+async def about(ctx):
+    embed = discord.Embed(
+                title = 'About',
+                description = 'About Us',
+                colour = discord.Colour.from_rgb(186, 220, 88)
+    )
+    embed.set_thumbnail(url = 'https://github.com/MovoLovo/CafeApp/blob/master/Discord-Bot-AOF/LOGO/Avo%20LOGO.png?raw=true')
+    embed.add_field(name = '**API Developer**', value = 'Spencer', inline = False)
+    embed.add_field(name = '**Discord Bot Developer**', value = 'HyunJun Park', inline = False)
+    embed.add_field(name = '**GitHub**', value = 'https://github.com/MovoLovo/CafeApp', inline = False)
+    embed.set_footer(text = f'Avo by Spencer & HyunJun', icon_url = 'https://github.com/MovoLovo/CafeApp/blob/master/Discord-Bot-AOF/LOGO/Avo%20LOGO.png?raw=true')
+    await ctx.send(embed = embed)
 
 client.run(BotToken)
