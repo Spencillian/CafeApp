@@ -60,6 +60,32 @@ async def help(ctx):
     await ctx.send(embed = embed)
 
 @client.command()
+async def dice(ctx, start = 1, end = 6):
+    rd = random.randrange(start, end)
+    if start == 1 and end == 6:
+        embed = discord.Embed(
+            title = 'Dice',
+            description = "Let's Roll the Dice!",
+            colour = discord.Colour.from_rgb(126, 214, 223)
+        )
+        if rd == 1:
+            embed.set_image(url = '')
+        elif rd == 2:
+            embed.set_image(url = '')
+        elif rd == 3:
+            embed.set_image(url = '')
+        elif rd == 4:
+            embed.set_image(url = '')
+        elif rd == 5:
+            embed.set_image(url = '')
+        elif rd == 6:
+            embed.set_image(url = '')
+        embed.set_footer(text = f'Avo by Spencer & HyunJun / Icon by Icons8', icon_url = 'https://github.com/MovoLovo/CafeApp/blob/master/Discord-Bot-AOF/LOGO/Avo%20LOGO.png?raw=true')
+        await ctx.send(embed = embed)
+    else
+        return ctx.send(f'|{rd}|')
+
+@client.command()
 async def rdimg(ctx, *, topic):
     embed = discord.Embed(
                 title = 'Topic',
