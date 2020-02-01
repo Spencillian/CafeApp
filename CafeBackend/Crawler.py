@@ -23,39 +23,37 @@ class Crawler:
     def nav_food(self):
         self.driver.get('https://avonoldfarms.flikisdining.com/menu/avon-old-farms?mode=browse')
 
-        self.driver.implicitly_wait(2)
-
+        self.driver.implicitly_wait(5)
         self.driver.find_element_by_xpath("//button[@class='primary']").click()
+
+        self.driver.implicitly_wait(5)
         self.driver.find_element_by_xpath("//li[@class='menu-item']//a").click()
 
         temp = self.driver.find_elements_by_xpath("//ul[@class='items']")
 
-        r = ""
 
+        r = ""
         for i in range(len(temp)):
             temp[i] = temp[i].text
-            r += temp[i]
-            print(temp[i])
-
-        print("------------------------------------------------")
-
-        print(r)
+            r += temp[i] + "\n"
+        r = r.split('\n')
 
 
-        t = []
-        for i, k in enumerate(temp):
-            if i is 0:
-                continue
-
-            if k == "Hotline":
-                print("fuck")
-                self.elements.append(t)
-                t = []
+        temp = []
+        for i in r:
+            if "Hotline" in i:
+                print("breakfast")
+                self.elements.append(temp)
+                temp = []
             else:
-                print("suck")
-                t.append(k)
+                print(i)
+                temp.append(i)
 
-        print(self.elements)
+        self.elements = self.elements[1:]
+
+
+    def get_elements(self):
+        return self.elements
 
 
     def quit(self):
