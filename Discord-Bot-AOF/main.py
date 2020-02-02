@@ -20,12 +20,12 @@ status = cycle(['Say !help', 'AOF Discord Bot', 'AVO'])
 
 @client.event
 async def on_ready():
-    print('-' * 20)
+    print('-' * 30)
     print('[Login info]')
     print(f'Bot Name: {client.user.name}')
     print(f'Bot ID: {client.user.id}')
     print(f'Bot Verson: {Bot_Version}')
-    print('-' * 20)
+    print('-' * 30)
     change_status.start()
 
 @tasks.loop(seconds = 15)
@@ -51,13 +51,14 @@ async def help(ctx):
                 description = 'wHaT cAn I hElP yOu? (☞ﾟヮﾟ)☞',
                 colour = discord.Colour.from_rgb(126, 214, 223)
     )
-    embed.add_field(name = '**!help**', value = 'Information about this bot', inline = False)
-    embed.add_field(name = '**!meal**', value = 'Provide information about meal plan at Avon Old Farms School', inline = False)
-    embed.add_field(name = '**!weather**', value = 'Weather info at Avon', inline = False)
-    embed.add_field(name = '**!dice <start> <end>**', value = 'dice', inline = False)
-    embed.add_field(name = '**!rdimg <topic>**', value = 'Random image', inline = False)
+    embed.add_field(name = '**!help**', value = 'Information about this bot.', inline = False)
+    embed.add_field(name = '**!meal**', value = 'Provide information about meal plan at Avon Old Farms School.', inline = False)
+    embed.add_field(name = '**!weather**', value = 'Weather info at Avon.', inline = False)
+    embed.add_field(name = '**!dice <Start> <End>**', value = "Let's Roll the Dice!\n Default value: Start = 1, End = 6", inline = False)
+    embed.add_field(name = '**!rdbox <Item 1> <Item 2> ... <Item N>**', value = 'Random Box!', inline = False)
+    embed.add_field(name = '**!rdimg <Topic>**', value = 'Random image', inline = False)
     embed.add_field(name = '**!ping**', value = 'pong!', inline = False)
-    embed.add_field(name = '**!about**', value = 'About Us', inline = False)
+    embed.add_field(name = '**!about**', value = 'Information about Developers', inline = False)
     embed.set_footer(text = f'Avo by Spencer & HyunJun', icon_url = 'https://github.com/MovoLovo/CafeApp/blob/master/Discord-Bot-AOF/LOGO/Avo%20LOGO.png?raw=true')
     await ctx.send(embed = embed)
 
@@ -85,10 +86,18 @@ async def dice(ctx, start = 1, end = 6):
         embed.set_footer(text = f'Avo by Spencer & HyunJun / Icon by Icons8', icon_url = 'https://github.com/MovoLovo/CafeApp/blob/master/Discord-Bot-AOF/LOGO/Avo%20LOGO.png?raw=true')
         await ctx.send(embed = embed)
     else:
-        return ctx.send(f'|{rd}|')
+        return await ctx.send(f'||{rd}||')
+
+@client.command()
+async def rdbox(ctx, *rdtext):
+    if len(rdtext) == 0:
+        return await ctx.send('Please enter items.')
+    return await ctx.send(f'||{rdtext[random.randrange(0, len(rdtext))]}||')
 
 @client.command()
 async def rdimg(ctx, *, topic):
+    if topic == "":
+        return await ctx.send('Please enter the topic.')
     embed = discord.Embed(
                 title = 'Topic',
                 description = topic,
