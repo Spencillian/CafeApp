@@ -1,6 +1,7 @@
 import os, sys
 import json
 import discord
+import random
 import urllib.parse
 from itertools import cycle
 from discord.ext import commands, tasks
@@ -53,6 +54,7 @@ async def help(ctx):
     embed.add_field(name = '**!help**', value = 'Information about this bot', inline = False)
     embed.add_field(name = '**!meal**', value = 'Provide information about meal plan at Avon Old Farms School', inline = False)
     embed.add_field(name = '**!weather**', value = 'Weather info at Avon', inline = False)
+    embed.add_field(name = '**!dice <start> <end>**', value = 'dice', inline = False)
     embed.add_field(name = '**!rdimg <topic>**', value = 'Random image', inline = False)
     embed.add_field(name = '**!ping**', value = 'pong!', inline = False)
     embed.add_field(name = '**!about**', value = 'About Us', inline = False)
@@ -82,7 +84,7 @@ async def dice(ctx, start = 1, end = 6):
             embed.set_image(url = 'https://raw.githubusercontent.com/MovoLovo/CafeApp/master/Discord-Bot-AOF/Image/icons8-dice-six-100.png')
         embed.set_footer(text = f'Avo by Spencer & HyunJun / Icon by Icons8', icon_url = 'https://github.com/MovoLovo/CafeApp/blob/master/Discord-Bot-AOF/LOGO/Avo%20LOGO.png?raw=true')
         await ctx.send(embed = embed)
-    else
+    else:
         return ctx.send(f'|{rd}|')
 
 @client.command()
