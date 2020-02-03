@@ -5,6 +5,8 @@ import random
 import urllib.parse
 from itertools import cycle
 from discord.ext import commands, tasks
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from CafeBackend import Crawler
 
 Bot_Version = 'Beta 0.0.1'
 print("Starting up...")
@@ -61,6 +63,12 @@ async def help(ctx):
     embed.add_field(name = '**!about**', value = 'Information about Developers', inline = False)
     embed.set_footer(text = f'Avo by Spencer & HyunJun', icon_url = 'https://github.com/MovoLovo/CafeApp/blob/master/Discord-Bot-AOF/LOGO/Avo%20LOGO.png?raw=true')
     await ctx.send(embed = embed)
+
+@client.command()
+async def meal(ctx):
+    c = Crawler.Crawler()
+    c.nav('food')
+    await ctx.send(c.get_elements())
 
 @client.command()
 async def dice(ctx, start = 1, end = 6):

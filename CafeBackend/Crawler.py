@@ -17,7 +17,7 @@ class Crawler:
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
 
     def nav(self, location):
-        if location is 'food':
+        if location == 'food':
             self.nav_food()
 
     def nav_food(self):
