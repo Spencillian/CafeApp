@@ -12,7 +12,7 @@ class Crawler:
 
         # Uncomment chrome_options to run the crawler headless (without window)
         chrome_options = Options()
-        # chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--headless')
 
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
 
