@@ -10,7 +10,7 @@ class Crawler:
 
         # Uncomment chrome_options to run the crawler headless (without window)
         chrome_options = Options()
-        # chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--headless')
 
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
 
@@ -27,20 +27,21 @@ class Crawler:
         self.driver.implicitly_wait(5)
         self.driver.find_element_by_xpath("//li[@class='menu-item']//a").click()
 
-        """These lines are only here for testing purposes"""
+        """
+        These lines are only here for testing purposes
+        They navigate to a page that still has a menu
+        """
         self.driver.implicitly_wait(5)
         self.driver.find_element_by_xpath("//li[@class='arrow']//a").click()
         """"""
 
         temp = self.driver.find_elements_by_xpath("//ul[@class='items']")
 
-
         r = ""
         for i in range(len(temp)):
             temp[i] = temp[i].text
             r += temp[i] + "\n"
         r = r.split('\n')
-
 
         temp = []
         for i in r:
@@ -52,8 +53,7 @@ class Crawler:
 
         self.elements = self.elements[1:]
         self.arr_to_dict()
-        print(str(self.elements))
-
+        # print(str(self.elements))
 
     def get_elements(self):
         return self.elements
@@ -63,7 +63,6 @@ class Crawler:
         for i, k in enumerate(self.elements):
             temp[i] = k
         self.elements = temp
-
 
     def quit(self):
         self.driver.close()
