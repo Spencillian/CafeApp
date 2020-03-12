@@ -6,7 +6,6 @@ from Crawler import Crawler
 class CafeBase:
     def __init__(self):
         self._init_base()
-        self.test()
 
     def _init_base(self):
         with Crawler() as c:
@@ -45,8 +44,8 @@ class CafeBase:
             'dinner': self.base[2].get(day, f"There is no dinner menu for {day}"),
         }
 
-    def test(self):
-        print(self.day_menu(0))
+    # def test(self):
+    #     print(self.day_menu(0))
 
 
 if __name__ == '__main__':
