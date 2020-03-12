@@ -19,6 +19,7 @@ def hrs_min(t=None):
 class CafeBase:
     def __init__(self):
         self._init_base()
+        self.test()
 
     def _init_base(self):
         with Crawler() as c:
@@ -26,13 +27,11 @@ class CafeBase:
             self.base = c.get_elements()
         print(self.base)
 
-    # def package(self):
+    def menu(self, day):
+        return self.base.get(day)
 
-    def time_type(self):
-        if current_time().weekday() in range(5):
-            if hrs_min(None) <= 730 or (hrs_min(None) >= 645 and current_time().weekday() in [0, 1, 3]) \
-                    or (hrs_min(None) >= 630 and current_time().weekday() in [2, 5]):
-                return "Breakfast"
+    def test(self):
+        print(self.menu(0))
 
 
 if __name__ == '__main__':

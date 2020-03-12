@@ -6,7 +6,7 @@ import json
 class Crawler:
     def __init__(self):
         self.buttons = []
-        self.elements = []
+        self.menu = []
 
         # Uncomment chrome_options to run the crawler headless (without window)
         chrome_options = Options()
@@ -14,55 +14,97 @@ class Crawler:
 
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
 
-    def nav(self, location):
-        if location == 'food':
-            self.nav_food()
-
-    def nav_food(self):
+    def nav(self):
+        # Navigate to the Flik Dining website
         self.driver.get('https://avonoldfarms.flikisdining.com/menu/avon-old-farms?mode=browse')
 
-        self.driver.implicitly_wait(5)
+        # Click on a button to go to the menus
+        self.driver.implicitly_wait(10)
         self.driver.find_element_by_xpath("//button[@class='primary']").click()
 
-        self.driver.implicitly_wait(5)
+
+        # --------------------- Breakfast ------------------------
+        # Select the breakfast menu from the list of menus
+        self.driver.implicitly_wait(10)
         self.driver.find_element_by_xpath("//li[@class='menu-item']//a").click()
 
-        """
-        These lines are only here for testing purposes
-        They navigate to a page that still has a menu
-        """
+        # TODO: Comment this out to reflect the correct menu for this week
         self.driver.implicitly_wait(5)
         self.driver.find_element_by_xpath("//li[@class='arrow']//a").click()
-        """"""
 
-        temp = self.driver.find_elements_by_xpath("//ul[@class='items']")
+        # TODO: Get the menus for the entire month
+        # self.driver.implicitly_wait(5)
+        # Select(self.driver.find_element_by_xpath("//select")).select_by_index(2)
 
-        r = ""
-        for i in range(len(temp)):
-            temp[i] = temp[i].text
-            r += temp[i] + "\n"
-        r = r.split('\n')
+        # Get the information from the web menus
+        week = self._get_menu()
 
-        temp = []
-        for i in r:
-            if "Hotline" in i:
-                self.elements.append(temp)
-                temp = []
-            else:
-                temp.append(i)
+        # Adds the breakfast foods to the crawler's menu
+        self.menu.append(self._package(week))
+        print(self.menu[0])
 
-        self.elements = self.elements[1:]
-        self.arr_to_dict()
-        # print(str(self.elements))
 
-    def get_elements(self):
-        return self.elements
+        # --------------------- Lunch ------------------------
+        # Go to the Lunch menu
+        self.driver.implicitly_wait(10)
+        self.driver.find_elements_by_xpath("//ul[@class='nav-content']//li//a")[2].click()
 
-    def arr_to_dict(self):
-        temp = {}
-        for i, k in enumerate(self.elements):
-            temp[i] = k
-        self.elements = temp
+        # Get the foods and dates from the Lunch menu
+        week = self._get_menu()
+
+        # Add the Lunch menu to the crawler's menu
+        self.menu.append(self._package(week))
+        print(self.menu[1])
+
+
+        # --------------------- Dinner ------------------------
+        # Go to the Dinner menu
+        self.driver.implicitly_wait(10)
+        self.driver.find_elements_by_xpath("//ul[@class='nav-content']//li//a")[3].click()
+
+        # Get the foods and dates from the Dinner menu
+        week = self._get_menu()
+
+        # Add the Dinner menu to the crawler's menu
+        self.menu.append(self._package(week))
+        print(self.menu[2])
+
+
+    def _package(self, elem_arr):
+        for i, item in enumerate(elem_arr):
+            elem_arr[i] = item.text
+
+        val = {}
+        day = ""
+        for item in elem_arr:
+            try:
+                int(item[0])
+                day = item
+                val[day] = []
+            except ValueError:
+                val[day].append(item)
+        return val
+
+    def _get_menu(self):
+        # Make sure that the food items in the web menu are there
+        self.driver.implicitly_wait(10)
+        self.driver.find_elements_by_xpath("//li[@class='day']//ul[li[@class='food text-links']]")
+
+        # Make sure that the dates on the web menu are there
+        self.driver.implicitly_wait(10)
+        self.driver.find_elements_by_xpath("//li[@class='day']//h3")
+
+        # Get the food items and dates from the web menu
+        self.driver.implicitly_wait(10)
+        return self.driver.find_elements_by_xpath("//li[@class='day']//ul[@class='items']//li[@class='food text-links']"
+                                                  " | //li[@class='day']//h3")
+
+    def get_info(self):
+        # TODO: Return conglomerate of menu
+        return self.menu
+
+    def get_json(self):
+        return json.dumps(self.menu)
 
     def quit(self):
         self.driver.close()
@@ -76,5 +118,5 @@ class Crawler:
 
 if __name__ == '__main__':
     with Crawler() as c:
-        c.nav('food')
+        c.nav()
         input("Type any key to quit: ")

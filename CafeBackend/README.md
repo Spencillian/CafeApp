@@ -13,7 +13,15 @@
 
 ### Requests
 
-- `GET /food`
+- `POST /food`
+
+Body of `POST`:
+```json
+{
+    "day": "type(int) for day 0 = Sunday"
+}
+```
+###### `Future` - Other data might be needed
 
 **Response**
 
@@ -21,17 +29,14 @@
  
 ```json
 {
-    "message": "(schedule exists) ? Schedule Exists : No Schedule Exists ",
+    "message": "There is or isn't a menu today",
     "data": 
     {
-        "time_type": "Breakfast/Lunch/Dinner",
-        "session_type": "Adviser/Sit Down/Business/Buffet",
-        "time_day": "Monday/Tuesday/Wednesday/./././...",
-        "time_clock": "{hour}:{minute} of lunch start time",
-        "food": ["Foods"]
+        "breakfast": ["List of foods in breakfast menu"],
+        "lunch": ["List of foods in lunch menu"],
+        "dinner": ["List of foods in dinner menu"]
     }
 }
 ```
-
-###### Might have to change the Foods array into a dictionary due to list ids in react native
+###### `Future` - Might have to change the breakfast/lunch/dinner arrays into a dictionary due to list ids in react native
 
