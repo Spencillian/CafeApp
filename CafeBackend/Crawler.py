@@ -79,7 +79,7 @@ class Crawler:
         for item in elem_arr:
             try:
                 int(item[0])
-                day = item
+                day = item[-3:]
                 val[day] = []
             except ValueError:
                 val[day].append(item)
@@ -99,19 +99,24 @@ class Crawler:
         return self.driver.find_elements_by_xpath("//li[@class='day']//ul[@class='items']//li[@class='food text-links']"
                                                   " | //li[@class='day']//h3")
 
+    # Get menus in dict form
     def get_info(self):
         # TODO: Return conglomerate of menu
         return self.menu
 
+    # Get menus in json form
     def get_json(self):
         return json.dumps(self.menu)
 
+    # Quit the driver
     def quit(self):
         self.driver.close()
 
+    # Function that allows the Crawler to be used with encapsulation
     def __enter__(self):
         return self
 
+    # Manages when the code leaves the encapsulation
     def __exit__(self, t, value, traceback):
         self.quit()
 
