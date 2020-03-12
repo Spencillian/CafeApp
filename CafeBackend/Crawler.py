@@ -41,7 +41,6 @@ class Crawler:
 
         # Adds the breakfast foods to the crawler's menu
         self.menu.append(self._package(week))
-        print(self.menu[0])
 
 
         # --------------------- Lunch ------------------------
@@ -54,7 +53,6 @@ class Crawler:
 
         # Add the Lunch menu to the crawler's menu
         self.menu.append(self._package(week))
-        print(self.menu[1])
 
 
         # --------------------- Dinner ------------------------
@@ -67,7 +65,6 @@ class Crawler:
 
         # Add the Dinner menu to the crawler's menu
         self.menu.append(self._package(week))
-        print(self.menu[2])
 
 
     def _package(self, elem_arr):
