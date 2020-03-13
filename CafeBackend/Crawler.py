@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.options import Options
 import json
 
 
+# A class that crawls through the flik website to retrieve the menus
 class Crawler:
     def __init__(self):
         self.buttons = []
@@ -66,7 +67,7 @@ class Crawler:
         # Add the Dinner menu to the crawler's menu
         self.menu.append(self._package(week))
 
-
+    # TODO: Delete entries with empty brackets, []
     def _package(self, elem_arr):
         for i, item in enumerate(elem_arr):
             elem_arr[i] = item.text
