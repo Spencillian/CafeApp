@@ -21,17 +21,17 @@ class Crawler:
 
         # Click on a button to go to the menus
         self.driver.implicitly_wait(10)
-        self.driver.find_element_by_xpath("//button[@class='primary']").click()
+        self._click(self.driver.find_element_by_xpath("//button[@class='primary']"))
 
 
         # --------------------- Breakfast ------------------------
         # Select the breakfast menu from the list of menus
         self.driver.implicitly_wait(10)
-        self.driver.find_element_by_xpath("//li[@class='menu-item']//a").click()
+        self._click(self.driver.find_element_by_xpath("//li[@class='menu-item']//a"))
 
         # TODO: Comment this out to reflect the correct menu for this week
         self.driver.implicitly_wait(5)
-        self.driver.find_element_by_xpath("//li[@class='arrow']//a").click()
+        self._click(self.driver.find_element_by_xpath("//li[@class='arrow']//a"))
 
         # TODO: Get the menus for the entire month
         # self.driver.implicitly_wait(5)
@@ -47,7 +47,7 @@ class Crawler:
         # --------------------- Lunch ------------------------
         # Go to the Lunch menu
         self.driver.implicitly_wait(10)
-        self.driver.find_elements_by_xpath("//ul[@class='nav-content']//li//a")[2].click()
+        self._click(self.driver.find_elements_by_xpath("//ul[@class='nav-content']//li//a")[2])
 
         # Get the foods and dates from the Lunch menu
         week = self._get_menu()
@@ -59,7 +59,7 @@ class Crawler:
         # --------------------- Dinner ------------------------
         # Go to the Dinner menu
         self.driver.implicitly_wait(10)
-        self.driver.find_elements_by_xpath("//ul[@class='nav-content']//li//a")[3].click()
+        self._click(self.driver.find_elements_by_xpath("//ul[@class='nav-content']//li//a")[3])
 
         # Get the foods and dates from the Dinner menu
         week = self._get_menu()
@@ -68,6 +68,9 @@ class Crawler:
         self.menu.append(self._package(week))
 
     # TODO: Delete entries with empty brackets, []
+    # Packages the data into a list of dictionaries
+    # Keys: First three letters of the respective days with the first letter capital
+    # Values: List of foods for that day
     def _package(self, elem_arr):
         for i, item in enumerate(elem_arr):
             elem_arr[i] = item.text
@@ -83,6 +86,11 @@ class Crawler:
                 val[day].append(item)
         return val
 
+    # Allows the crawler to click on an element regardless of if it's visibility
+    def _click(self, element):
+        self.driver.execute_script("arguments[0].click();", element)
+
+    # Simplifies the process of getting the foods from the menus
     def _get_menu(self):
         # Make sure that the food items in the web menu are there
         self.driver.implicitly_wait(10)
@@ -122,4 +130,5 @@ class Crawler:
 if __name__ == '__main__':
     with Crawler() as c:
         c.nav()
+        print(c.get_info())
         input("Type any key to quit: ")

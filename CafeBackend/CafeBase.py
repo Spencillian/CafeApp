@@ -8,11 +8,13 @@ class CafeBase:
         self._init_base()
         # self.test()
 
+    # Initializes or refreshes the database
     def _init_base(self):
         with Crawler() as c:
             c.nav()
             self.base = c.get_info()
 
+    # For future use of the app wants menus based on time
     @staticmethod
     def hrs_min(t=None):
         if not t:
@@ -23,6 +25,8 @@ class CafeBase:
         minutes = t.time().minute
         return (hrs * 100) + minutes
 
+    # Returns an organized dict of the menu for a specific day
+    # Days are 0-7 with 0 = Sun
     def day_menu(self, day):
         day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][day]
 
@@ -32,6 +36,7 @@ class CafeBase:
             'dinner': self.base[2].get(day, f"There is no dinner menu for {day}"),
         }
 
+    # Test method for testing the return values of the database
     # def test(self):
     #     print(self.day_menu(0))
 

@@ -13,14 +13,8 @@
 
 ### Requests
 
-- `POST /food`
+- `GET /food?day=<int:day>`
 
-Body of `POST`:
-```json
-{
-    "day": "type(int) for day 0 = Sunday"
-}
-```
 ###### `Future` - Other data might be needed
 
 **Response**
