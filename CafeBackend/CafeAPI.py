@@ -59,8 +59,12 @@ def handle_error(err):
         return jsonify({"errors": messages}), err.code
 
 
-# Add the Food branch to /cafeapi/food
-api.add_resource(Food, '/cafeapi/food')
+if __name__ == '__main__':
+    # Initialize the database
+    get_db()
 
-# Run the app
-app.run(host='0.0.0.0', port='7777', debug=True)
+    # Add the Food branch to /cafeapi/food
+    api.add_resource(Food, '/cafeapi/food')
+
+    # Run the app
+    app.run(host='0.0.0.0', port='7777', debug=True)

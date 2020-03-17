@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 import json
 
 
@@ -9,11 +8,16 @@ class Crawler:
         self.buttons = []
         self.menu = []
 
-        # Uncomment chrome_options to run the crawler headless (without window)
-        chrome_options = Options()
-        chrome_options.add_argument('--headless')
+        # chrome_options to run the crawler headless (without window) with Chrome
+        # chrome_options = webdriver.ChromeOptions()
+        # chrome_options.set_headless()
 
-        self.driver = webdriver.Chrome(chrome_options=chrome_options)
+        # firefox_options to run the crawler headless with Firefox
+        firefox_options = webdriver.FirefoxOptions()
+        firefox_options.set_headless()
+
+        # Declare the driver to control the browser
+        self.driver = webdriver.Firefox(firefox_options=firefox_options)
 
     def nav(self):
         # Navigate to the Flik Dining website
@@ -30,7 +34,10 @@ class Crawler:
         self._click(self.driver.find_element_by_xpath("//li[@class='menu-item']//a"))
 
         # TODO: Comment this out to reflect the correct menu for this week
-        self.driver.implicitly_wait(5)
+        self.driver.implicitly_wait(10)
+        self._click(self.driver.find_element_by_xpath("//li[@class='arrow']//a"))
+
+        self.driver.implicitly_wait(10)
         self._click(self.driver.find_element_by_xpath("//li[@class='arrow']//a"))
 
         # TODO: Get the menus for the entire month
