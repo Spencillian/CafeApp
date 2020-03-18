@@ -3,25 +3,48 @@ import * as React from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Icon from "react-native-vector-icons/FontAwesome";
+
 import Day from './components/Day/Day';
-// import Week from "./components/Week/Week";
+import Week from './components/Week/Week';
 
 function HomeScreen(){
     return(
-        <Day/>
+        <Day day={null}/>
     );
 }
 
-const Stack = createStackNavigator()
+function DetailScreen(){
+    return (
+        <Week />
+    );
+}
+
+const Tab = createBottomTabNavigator();
 
 function App(){
     return(
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen
+            <Tab.Navigator initialRouteName="Home">
+                <Tab.Screen
                     name="Home" component={HomeScreen}
+                    options={{
+                        tabBarLabel: "Today",
+                        tabBarIcon: ({ color, size}) => (
+                            <Icon name="th-list" color={color} size={size}/>
+                        ),
+                    }}
                 />
-            </Stack.Navigator>
+                <Tab.Screen
+                    name="Details" component={DetailScreen}
+                    options={{
+                        tabBarLabel: "This Week",
+                        tabBarIcon: ({ color, size}) => (
+                            <Icon name="th" color={color} size={size}/>
+                        ),
+                    }}
+                />
+            </Tab.Navigator>
         </NavigationContainer>
     );
 }

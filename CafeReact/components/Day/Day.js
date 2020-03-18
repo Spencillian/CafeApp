@@ -5,11 +5,12 @@ import * as React from 'react';
 export default class Day extends React.Component{
     constructor(props){
         super(props)
+        let queriedDay = props.day === null ? new Date().getDay() : props.day;
         this.state = {
             isLoading: true,
             data: {},
-            todayNum: new Date().getDay(),
-            todayLit: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][new Date().getDay()]
+            todayNum: queriedDay,
+            todayLit: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][queriedDay]
         }
     }
     
@@ -21,7 +22,7 @@ export default class Day extends React.Component{
                 data: data,
                 isLoading: false,
             });
-        } catch (err){
+        } catch (error){
             console.log(error);
             throw error
         }
@@ -37,7 +38,6 @@ export default class Day extends React.Component{
             );
         }
         
-        console.log(this.state.data)
         return(
             <SafeAreaView style={styles.container}>
                 <SectionList 
@@ -46,13 +46,13 @@ export default class Day extends React.Component{
                     sections={this.state.data}
                     keyExtractor={(item, index) => item + index}
                     renderItem={({ item }) => (
-                    <Text style={styles.item}>{ item }</Text>
+                        <Text style={styles.item}>  •    { item }</Text>
                     )}
                     renderSectionHeader={({ section: { title } }) => (
                         <Text style={styles.header}>{ title }</Text>
                     )}
                     ListHeaderComponent={
-                        <Text style={styles.day}>Wed</Text>
+                        <Text style={styles.day}>{this.state.todayLit}</Text>
                     }
                 />
             </SafeAreaView>
