@@ -1,28 +1,29 @@
-import React, { Component } from "react";
-import { View, Text, SectionList, StyleSheet } from "react-native";
+import 'react-native-gesture-handler';
+import * as React from 'react';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Day from './components/Day/Day';
+// import Week from "./components/Week/Week";
 
-export default class App extends Component{
-  constructor(props){
-    super(props)
-    this.state = {}
-  }
-
-  componentDidMount(){
-  }
-
-  render(){
+function HomeScreen(){
     return(
-      <View style={styles.container}>
-        <Text>
-          
-        </Text>
-      </View>
-    )
-  }
+        <Day/>
+    );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  }
-})
+const Stack = createStackNavigator()
+
+function App(){
+    return(
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="Home">
+                <Stack.Screen
+                    name="Home" component={HomeScreen}
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+}
+
+export default App;

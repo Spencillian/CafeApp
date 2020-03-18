@@ -30,11 +30,11 @@ class CafeBase:
     def day_menu(self, day):
         day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][day]
 
-        return {
-            'breakfast': self.base[0].get(day, f"There is no breakfast menu for {day}"),
-            'lunch': self.base[1].get(day, f"There is no lunch menu for {day}"),
-            'dinner': self.base[2].get(day, f"There is no dinner menu for {day}"),
-        }
+        return [
+            {"title": 'Breakfast', "data": self.base[0].get(day, f"There is no breakfast menu for {day}")},
+            {"title": 'Lunch', "data": self.base[1].get(day, f"There is no lunch menu for {day}")},
+            {"title": 'Dinner', "data": self.base[2].get(day, f"There is no dinner menu for {day}")},
+        ]
 
     # Test method for testing the return values of the database
     # def test(self):

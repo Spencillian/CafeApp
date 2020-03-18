@@ -6,9 +6,6 @@ from CafeBase import CafeBase
 from webargs import fields
 from webargs.flaskparser import use_kwargs
 
-# Declare an emtpy object for a database
-base = None
-
 # Set up the Flask API
 app = Flask(__name__)
 api = Api(app)
@@ -18,7 +15,7 @@ api = Api(app)
 def get_db():
     global base
     if base is None:
-        print("Refreshed Base")
+        print("Initialized Base")
         base = CafeBase()
     return base
 
@@ -61,6 +58,7 @@ def handle_error(err):
 
 if __name__ == '__main__':
     # Initialize the database
+    base = None
     get_db()
 
     # Add the Food branch to /cafeapi/food
