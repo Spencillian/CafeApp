@@ -28,7 +28,7 @@ export default class Day extends React.Component{
     
     async componentDidMount(){
         try{
-            const response = await fetch(`https://b8ce0c62.ngrok.io/cafeapi/food?day=${this.state.todayNum}`);
+            const response = await fetch(`https://ed26af11.ngrok.io/cafeapi/food?day=${this.state.todayNum}`);
             const data = await response.json();
             this.setState({
                 data: data,
@@ -108,14 +108,14 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     day: {
-        fontSize: 40,
+        fontSize: (Dimensions.get("window").width) * .11,
         flex: 6,
     },
     header: {
-        fontSize: 32,
+        fontSize: (Dimensions.get("window").width) * .085,
     },
     item:{
-        fontSize: 20
+        fontSize: (Dimensions.get("window").width) * .048,
     },
     sectionList: {
         paddingTop: 10,

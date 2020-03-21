@@ -142,15 +142,12 @@ const styles = StyleSheet.create({
     },
     btnText: {
         flex: 6,
-        fontSize: 40,
+        fontSize: (Dimensions.get("window").width) * .095,
         paddingTop: 10,
         paddingLeft: 20
     },
-    btnIcon: {
-
-    },
     header: {
-        fontSize: 45,
+        fontSize: (Dimensions.get("window").width) * .11,
         paddingTop: 10,
     },
     icon: {
