@@ -31,9 +31,9 @@ class CafeBase:
         day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][day]
 
         return [
-            {"title": 'Breakfast', "data": self.base[0].get(day, f"There is no breakfast menu for {day}")},
-            {"title": 'Lunch', "data": self.base[1].get(day, f"There is no lunch menu for {day}")},
-            {"title": 'Dinner', "data": self.base[2].get(day, f"There is no dinner menu for {day}")},
+            {"title": 'Breakfast', "data": self.base[0].get(day, [])},
+            {"title": 'Lunch', "data": self.base[1].get(day, [])},
+            {"title": 'Dinner', "data": self.base[2].get(day, [])},
         ]
 
     # Test method for testing the return values of the database

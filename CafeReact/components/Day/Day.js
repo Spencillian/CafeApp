@@ -1,16 +1,28 @@
-import { View, Text, StyleSheet, SectionList, ActivityIndicator, SafeAreaView, ScrollView } from "react-native";
+import {
+    View,
+    Text,
+    StyleSheet,
+    SectionList,
+    ActivityIndicator,
+    SafeAreaView,
+    TouchableOpacity,
+    Dimensions
+} from "react-native";
+import Icon from 'react-native-vector-icons/AntDesign'
 import * as React from 'react';
 
 
 export default class Day extends React.Component{
     constructor(props){
         super(props)
-        let queriedDay = props.day === null ? new Date().getDay() : props.day;
+        let queriedDay = props.day === undefined ? new Date().getDay() : props.day;
         this.state = {
             isLoading: true,
             data: {},
             todayNum: queriedDay,
-            todayLit: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][queriedDay]
+            todayLit: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][queriedDay],
+            isQueried: !(props.day === undefined),
+            nav: props.nav
         }
     }
     
@@ -38,6 +50,30 @@ export default class Day extends React.Component{
             );
         }
         
+        if(!this.state.isQueried){
+            return(
+                <SafeAreaView style={styles.container}>
+                    <SectionList 
+                        contentContainerStyle={styles.contentContainer}
+                        style={styles.sectionList}
+                        sections={this.state.data}
+                        keyExtractor={(item, index) => item + index}
+                        renderItem={({ item }) => (
+                            <Text style={styles.item}>  •    { item }</Text>
+                        )}
+                        renderSectionHeader={({ section: { title } }) => (
+                            <Text style={styles.header}>{ title }</Text>
+                        )}
+                        ListHeaderComponent={
+                            <View style={styles.sectionListHeaderBox}>
+                                <Text style={styles.day}>{this.state.todayLit} - Today</Text>
+                            </View>
+                        }
+                    />
+                </SafeAreaView>
+            );
+        }
+
         return(
             <SafeAreaView style={styles.container}>
                 <SectionList 
@@ -52,7 +88,14 @@ export default class Day extends React.Component{
                         <Text style={styles.header}>{ title }</Text>
                     )}
                     ListHeaderComponent={
-                        <Text style={styles.day}>{this.state.todayLit}</Text>
+                        <View style={styles.sectionListHeaderBox}>
+                            <Text style={styles.day}>{this.state.todayLit}</Text>
+                            <TouchableOpacity style={styles.backButton}
+                                onPress={() => this.state.nav.navigate('Details')}
+                            >
+                                <Icon style={styles.icon} name='left' size={(Dimensions.get("window").height) * .065}/>
+                            </TouchableOpacity>
+                        </View>
                     }
                 />
             </SafeAreaView>
@@ -66,7 +109,7 @@ const styles = StyleSheet.create({
     },
     day: {
         fontSize: 40,
-        fontWeight: "700",
+        flex: 6,
     },
     header: {
         fontSize: 32,
@@ -84,6 +127,14 @@ const styles = StyleSheet.create({
     },
     activityIndicator: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    backButton: {
+        flex: 1
+    },
+    sectionListHeaderBox: {
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
     },

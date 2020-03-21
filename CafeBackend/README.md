@@ -25,12 +25,11 @@
 {
     "message": "There is or isn't a menu today",
     "data": 
-    {
-        "breakfast": ["List of foods in breakfast menu"],
-        "lunch": ["List of foods in lunch menu"],
-        "dinner": ["List of foods in dinner menu"]
-    }
+    [
+        {"title": "breakfast", "data": ["List of foods in breakfast menu", "[] if no food"]},
+        {"title": "lunch", "data": ["List of foods in lunch menu", "[] if no food"]},
+        {"title": "dinner", "data": ["List of foods in dinner menu", "[] if no food"]}
+    ]
 }
 ```
-###### `Future` - Might have to change the breakfast/lunch/dinner arrays into a dictionary due to list ids in react native
 
