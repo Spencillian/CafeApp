@@ -125,9 +125,6 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         paddingHorizontal: 10,
-        // TODO: Delete below for production version
-        // borderWidth: 1,
-        // borderColor: 'red',
     },
     cols: {
         flex: 1,
@@ -135,10 +132,6 @@ const styles = StyleSheet.create({
     button: {
         flex: 1,
         flexDirection: "row",
-
-        // TODO: Delete below for production version
-        // borderWidth: 1,
-        // borderColor: 'red',
     },
     btnText: {
         flex: 6,
@@ -153,5 +146,8 @@ const styles = StyleSheet.create({
     icon: {
         flex: 1,
         alignSelf: "center"
+    },
+    titleColor: {
+        
     }
 })

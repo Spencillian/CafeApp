@@ -1,5 +1,9 @@
 from selenium import webdriver
 import json
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 # A class that crawls through the flik website to retrieve the menus
@@ -34,8 +38,23 @@ class Crawler:
         self._click(self.driver.find_element_by_xpath("//li[@class='menu-item']//a"))
 
         # TODO: Comment this out to reflect the correct menu for this week
+
+        wait = WebDriverWait(self.driver, 10)
+
+        print("first wait")
+        wait.until(EC.invisibility_of_element_located((By.CLASS_NAME, 'loading')))
+
         self.driver.implicitly_wait(10)
         self._click(self.driver.find_element_by_xpath("//li[@class='arrow']//a"))
+
+        print("middle wait")
+        wait.until(EC.invisibility_of_element_located((By.CLASS_NAME, 'loading')))
+
+        self.driver.implicitly_wait(10)
+        self._click(self.driver.find_element_by_xpath("//li[@class='arrow']//a"))
+
+        print("last wait")
+        wait.until(EC.invisibility_of_element_located((By.CLASS_NAME, 'loading')))
 
         self.driver.implicitly_wait(10)
         self._click(self.driver.find_element_by_xpath("//li[@class='arrow']//a"))

@@ -41,7 +41,6 @@ export default class Day extends React.Component{
     }
 
     render(){
-
         if(this.state.isLoading){
             return(
                 <View style={styles.activityIndicator}>
@@ -49,7 +48,7 @@ export default class Day extends React.Component{
                 </View>
             );
         }
-        
+
         if(!this.state.isQueried){
             return(
                 <SafeAreaView style={styles.container}>
