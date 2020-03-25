@@ -1,6 +1,5 @@
 from selenium import webdriver
 import json
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -64,7 +63,7 @@ class Crawler:
         # Select(self.driver.find_element_by_xpath("//select")).select_by_index(2)
 
         # Get the information from the web menus
-        week = self._get_menu()
+        week = self._element_text(self._get_menu())
 
         # Adds the breakfast foods to the crawler's menu
         self.menu.append(self._package(week))
@@ -76,7 +75,7 @@ class Crawler:
         self._click(self.driver.find_elements_by_xpath("//ul[@class='nav-content']//li//a")[2])
 
         # Get the foods and dates from the Lunch menu
-        week = self._get_menu()
+        week = self._element_text(self._get_menu())
 
         # Add the Lunch menu to the crawler's menu
         self.menu.append(self._package(week))
@@ -88,7 +87,7 @@ class Crawler:
         self._click(self.driver.find_elements_by_xpath("//ul[@class='nav-content']//li//a")[3])
 
         # Get the foods and dates from the Dinner menu
-        week = self._get_menu()
+        week = self._element_text(self._get_menu())
 
         # Add the Dinner menu to the crawler's menu
         self.menu.append(self._package(week))
@@ -97,13 +96,10 @@ class Crawler:
     # Packages the data into a list of dictionaries
     # Keys: First three letters of the respective days with the first letter capital
     # Values: List of foods for that day
-    def _package(self, elem_arr):
-        for i, item in enumerate(elem_arr):
-            elem_arr[i] = item.text
-
+    def _package(self, text_arr):
         val = {}
         day = ""
-        for item in elem_arr:
+        for item in text_arr:
             try:
                 int(item[0])
                 day = item[-3:]
@@ -111,6 +107,11 @@ class Crawler:
             except ValueError:
                 val[day].append(item)
         return val
+
+    def _element_text(self, elem_arr):
+        for i, item in enumerate(elem_arr):
+            elem_arr[i] = item.text
+        return elem_arr
 
     # Allows the crawler to click on an element regardless of if it's visibility
     def _click(self, element):
