@@ -1,12 +1,10 @@
 import { 
     View, 
     Text, 
-    StyleSheet, 
-    SectionList, 
-    ActivityIndicator, 
-    SafeAreaView,
+    StyleSheet,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    ImageBackground
 } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -16,7 +14,7 @@ import Day from '../Day/Day'
 
 function DetailScreen({ navigation }){
     return(
-        <SafeAreaView style={styles.container}>
+        <ImageBackground style={styles.container} source={require('../../images/background.jpg')}>
             <View style={styles.rows}>
                 <Text style={styles.header}>This Week's Menus</Text>
             </View>
@@ -90,7 +88,7 @@ function DetailScreen({ navigation }){
                     <Icon style={styles.icon} size={(Dimensions.get("window").height) * .06} name="right"/>
                 </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </ImageBackground>
     );
 }
 
@@ -125,6 +123,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         paddingHorizontal: 10,
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
     },
     cols: {
         flex: 1,
@@ -132,22 +131,26 @@ const styles = StyleSheet.create({
     button: {
         flex: 1,
         flexDirection: "row",
+        borderBottomColor: 'white',
+        borderBottomWidth: 1,
     },
     btnText: {
         flex: 6,
         fontSize: (Dimensions.get("window").width) * .095,
         paddingTop: 10,
-        paddingLeft: 20
+        paddingLeft: 20,
+        color: 'white'
     },
     header: {
         fontSize: (Dimensions.get("window").width) * .11,
         paddingTop: 10,
+        color: 'yellow',
+        borderBottomColor: 'yellow',
+        borderBottomWidth: 2,
     },
     icon: {
         flex: 1,
-        alignSelf: "center"
+        alignSelf: "center",
+        color: 'white'
     },
-    titleColor: {
-        
-    }
 })
