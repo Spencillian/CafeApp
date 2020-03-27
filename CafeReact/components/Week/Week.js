@@ -137,8 +137,8 @@ const styles = StyleSheet.create({
     btnText: {
         flex: 6,
         fontSize: (Dimensions.get("window").width) * .095,
-        paddingTop: 10,
         paddingLeft: 20,
+        alignSelf: "center",
         color: 'white'
     },
     header: {
