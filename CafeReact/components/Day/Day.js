@@ -28,7 +28,7 @@ export default class Day extends React.Component{
     
     async componentDidMount(){
         try{
-            const response = await fetch(`http://36bc6578.ngrok.io/cafeapi/food?day=${this.state.todayNum}`);
+            const response = await fetch(`https://36bc6578.ngrok.io/cafeapi/food?day=${this.state.todayNum}`);
             const data = await response.json();
             this.setState({
                 data: data,
@@ -84,7 +84,6 @@ export default class Day extends React.Component{
                                 <Text style={styles.day}>{this.state.todayLit} - Today</Text>
                             </View>
                         }
-
                         renderSectionFooter={() => <View style={styles.listFooter}></View>}
                     />
                 </ImageBackground>
@@ -115,7 +114,6 @@ export default class Day extends React.Component{
                             </TouchableOpacity>
                         </View>
                     }
-
                     renderSectionFooter={() => <View style={styles.listFooter}></View>}
                 />
             </ImageBackground>
@@ -163,7 +161,7 @@ const styles = StyleSheet.create({
         borderBottomColor: 'yellow',
         borderBottomWidth: 2,
         paddingBottom: 5,
-        marginBottom: 15
+        marginBottom: 15,
     },
     listFooter: {
         borderRightColor: 'transparent',
