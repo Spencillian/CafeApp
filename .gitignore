@@ -1,5 +1,6 @@
 *.k
 *.DS_Store
+*.keystore
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

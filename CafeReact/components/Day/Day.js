@@ -28,7 +28,7 @@ export default class Day extends React.Component{
     
     async componentDidMount(){
         try{
-            const response = await fetch(`https://36bc6578.ngrok.io/cafeapi/food?day=${this.state.todayNum}`);
+            const response = await fetch(`https://88a07c86.ngrok.io/cafeapi/food?day=${this.state.todayNum}`);
             const data = await response.json();
             this.setState({
                 data: data,
