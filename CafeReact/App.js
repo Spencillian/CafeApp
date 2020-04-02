@@ -1,6 +1,5 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -10,7 +9,7 @@ import Week from './components/Week/Week';
 
 function HomeScreen(){
     return(
-        <Day/>
+        <Day nav={Tab}/>
     );
 }
 
@@ -25,7 +24,16 @@ const Tab = createBottomTabNavigator();
 function App(){
     return(
         <NavigationContainer>
-            <Tab.Navigator initialRouteName="Home">
+            <Tab.Navigator initialRouteName="Home" 
+                tabBarOptions={{
+                    activeTintColor: 'yellow',
+                    activeBackgroundColor: 'rgba(0, 0, 0, 0.7)',
+                    inactiveBackgroundColor: 'rgba(0, 0, 0, 0.7)',
+                    style: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)'
+                    }
+                }}
+            >
                 <Tab.Screen
                     name="Home" component={HomeScreen}
                     options={{

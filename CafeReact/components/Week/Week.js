@@ -151,6 +151,6 @@ const styles = StyleSheet.create({
     icon: {
         flex: 1,
         alignSelf: "center",
-        color: 'white'
+        color: 'yellow'
     },
 })

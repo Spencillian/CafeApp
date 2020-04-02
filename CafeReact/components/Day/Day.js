@@ -22,11 +22,23 @@ export default class Day extends React.Component{
             todayNum: queriedDay,
             todayLit: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][queriedDay],
             isQueried: !(props.day === undefined),
-            nav: props.nav
+            nav: props.nav,
+            connectionError: false,
+            lastRefresh: Date(Date.now()).toString(),
         }
+
+        this.refreshScreen = this.refreshScreen.bind(this)
     }
     
     async componentDidMount(){
+        this.refreshScreen()
+    }
+
+    async refreshScreen() {
+        this.setState({
+            isLoading: true,
+            connectionError: false
+        })
         try{
             const response = await fetch(`https://88a07c86.ngrok.io/cafeapi/food?day=${this.state.todayNum}`);
             const data = await response.json();
@@ -36,7 +48,10 @@ export default class Day extends React.Component{
             });
         } catch (error){
             console.log(error);
-            throw error
+            this.setState({
+                connectionError: true,
+                isLoading: false,
+            })
         }
     }
 
@@ -55,11 +70,48 @@ export default class Day extends React.Component{
         );
     }
 
+    backButton = () => {
+        if(this.state.isQueried){
+            return(
+                <TouchableOpacity style={styles.errorButton}
+                    onPress={() => this.state.nav.goBack()}
+                >
+                    <Text style={styles.errorButtonText}>
+                        Back
+                    </Text>
+                </TouchableOpacity>
+            );
+        }
+
+        return(
+            <TouchableOpacity style={styles.errorButton}
+                onPress={() => this.refreshScreen()}
+            >
+                <Text style={styles.errorButtonText}>
+                    Refresh
+                </Text>
+            </TouchableOpacity>
+        );
+    }
+
     render(){
         if(this.state.isLoading){
             return(
                 <ImageBackground style={styles.activityIndicator} source={require('../../images/background.jpg')}>
                     <ActivityIndicator style={styles.indicatorWheel}/>
+                </ImageBackground>
+            );
+        }
+
+        if(this.state.connectionError){
+            return(
+                <ImageBackground style={styles.errorScreen} source={require('../../images/background.jpg')}>
+                    <View style={styles.errorView}>
+                        <Text style={styles.errorText}>
+                            Connection Error. Please connect or reconnect to wifi or cellular.
+                        </Text>
+                        {this.backButton()}
+                    </View>
                 </ImageBackground>
             );
         }
@@ -108,7 +160,7 @@ export default class Day extends React.Component{
                         <View style={styles.sectionListHeaderBox}>
                             <Text style={styles.day}>{this.state.todayLit}</Text>
                             <TouchableOpacity style={styles.backButton}
-                                onPress={() => this.state.nav.navigate('Details')}
+                                onPress={() => this.state.nav.popToTop()}
                             >
                                 <Icon style={styles.icon} name='left' size={(Dimensions.get("window").height) * .063}/>
                             </TouchableOpacity>
@@ -178,5 +230,26 @@ const styles = StyleSheet.create({
     indicatorWheel: {
         flex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    },
+    errorScreen: {
+        flex: 1,
+    },
+    errorView: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    },
+    errorText: {
+        fontSize: (Dimensions.get("window").width) * .085,
+        textAlign: 'center',
+        color: 'white',
+    },
+    errorButton: {
+        alignItems: 'center'
+    },
+    errorButtonText: {
+        fontSize: (Dimensions.get("window").width) * .09,
+        color: 'yellow'
     }
 })
