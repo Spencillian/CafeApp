@@ -22,6 +22,8 @@ class Crawler:
         # Declare the driver to control the browser
         self.driver = webdriver.Firefox(firefox_options=firefox_options)
 
+        print("Crawler: Initiated Driver")
+
     def nav(self):
         # Navigate to the Flik Dining website
         self.driver.get('https://avonoldfarms.flikisdining.com/menu/avon-old-farms?mode=browse')
@@ -30,6 +32,7 @@ class Crawler:
         self.driver.implicitly_wait(10)
         self._click(self.driver.find_element_by_xpath("//button[@class='primary']"))
 
+        print("Crawler: Navigated to website")
 
         # --------------------- Breakfast ------------------------
         # Select the breakfast menu from the list of menus
@@ -40,44 +43,54 @@ class Crawler:
 
         wait = WebDriverWait(self.driver, 10)
 
-        for _ in range(4):
+        for _ in range(6):
             wait.until(EC.invisibility_of_element_located((By.CLASS_NAME, 'loading')))
             self.driver.implicitly_wait(10)
             self._click(self.driver.find_element_by_xpath("//li[@class='arrow']//a"))
+
+        print("Crawler: Navigated to Breakfast")
 
         # TODO: Get the menus for the entire month
         # self.driver.implicitly_wait(5)
         # Select(self.driver.find_element_by_xpath("//select")).select_by_index(2)
 
         # Get the information from the web menus
-        week = self._element_text(self._get_menu())
+        week = self._get_menu()
 
         # Adds the breakfast foods to the crawler's menu
         self.menu.append(self._package(week))
 
+        print("Crawler: Got Breakfast Data")
 
         # --------------------- Lunch ------------------------
         # Go to the Lunch menu
         self.driver.implicitly_wait(10)
         self._click(self.driver.find_elements_by_xpath("//ul[@class='nav-content']//li//a")[1])
 
+        print("Crawler: Navigated to Lunch website")
+
         # Get the foods and dates from the Lunch menu
-        week = self._element_text(self._get_menu())
+        week = self._get_menu()
 
         # Add the Lunch menu to the crawler's menu
         self.menu.append(self._package(week))
 
+        print("Crawler: Got Lunch Data")
 
         # --------------------- Dinner ------------------------
         # Go to the Dinner menu
         self.driver.implicitly_wait(10)
         self._click(self.driver.find_elements_by_xpath("//ul[@class='nav-content']//li//a")[2])
 
+        print("Crawler: Navigated to Dinner website")
+
         # Get the foods and dates from the Dinner menu
-        week = self._element_text(self._get_menu())
+        week = self._get_menu()
 
         # Add the Dinner menu to the crawler's menu
         self.menu.append(self._package(week))
+
+        print("Crawler: Got Dinner data")
 
     # TODO: Delete entries with empty brackets, []
     # Packages the data into a list of dictionaries
@@ -116,8 +129,10 @@ class Crawler:
 
         # Get the food items and dates from the web menu
         self.driver.implicitly_wait(10)
-        return self.driver.find_elements_by_xpath("//li[@class='day']//ul[@class='items']//li[@class='food text-links']"
+        elem_arr = self.driver.find_elements_by_xpath("//li[@class='day']//ul[@class='items']//li[@class='food text-links']"
                                                   " | //li[@class='day']//h3[@class='day-label']")
+
+        return self._element_text(elem_arr)
 
     # Get menus in dict form
     def get_info(self):
@@ -131,6 +146,7 @@ class Crawler:
     # Quit the driver
     def quit(self):
         self.driver.close()
+        print("Stage: Exited Navigator")
 
     # Function that allows the Crawler to be used with encapsulation
     def __enter__(self):

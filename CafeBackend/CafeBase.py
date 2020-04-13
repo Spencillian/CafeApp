@@ -5,14 +5,12 @@ from Crawler import Crawler
 # Database that manages the data for the API
 class CafeBase:
     def __init__(self):
-        self._init_base()
-        # self.test()
-
-    # Initializes or refreshes the database
-    def _init_base(self):
         with Crawler() as c:
             c.nav()
             self.base = c.get_info()
+
+            print("Database: Initiated Data Collection")
+
 
     # For future use of the app wants menus based on time
     @staticmethod
@@ -30,6 +28,13 @@ class CafeBase:
     def day_menu(self, day):
         day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][day]
 
+        print("Collected Data:")
+        print([
+            {"title": 'Breakfast', "data": self.base[0].get(day, [])},
+            {"title": 'Lunch', "data": self.base[1].get(day, [])},
+            {"title": 'Dinner', "data": self.base[2].get(day, [])},
+        ])
+
         return [
             {"title": 'Breakfast', "data": self.base[0].get(day, [])},
             {"title": 'Lunch', "data": self.base[1].get(day, [])},
@@ -37,9 +42,10 @@ class CafeBase:
         ]
 
     # Test method for testing the return values of the database
-    # def test(self):
-    #     print(self.day_menu(0))
+    def test(self):
+        print(self.day_menu(0))
 
 
 if __name__ == '__main__':
     base = CafeBase()
+    base.test()

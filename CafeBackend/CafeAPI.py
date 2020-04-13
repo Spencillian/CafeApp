@@ -15,7 +15,7 @@ api = Api(app)
 def get_db():
     global base
     if base is None:
-        print("Initialized Base")
+        print("API: Initiated Database")
         base = CafeBase()
     return base
 
@@ -41,6 +41,7 @@ args_list = {
 class Food(Resource):
     @use_kwargs(args_list, location="query")
     def get(self, day):
+        print(f'Incoming Request: day={day}')
         return get_db().day_menu(day)
 
 
@@ -63,6 +64,10 @@ if __name__ == '__main__':
 
     # Add the Food branch to /cafeapi/food
     api.add_resource(Food, '/cafeapi/food')
+    print("API: Added food resource")
 
     # Run the app
+    print("API: Initiating App")
     app.run(host='0.0.0.0', port='7777')
+
+    print("API: Exited App")
