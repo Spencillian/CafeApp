@@ -111,11 +111,6 @@ class Crawler:
                 val[day].append(item)
         return val
 
-    def _element_text(self, elem_arr):
-        for i, item in enumerate(elem_arr):
-            elem_arr[i] = item.text
-        return elem_arr
-
     # Allows the crawler to click on an element regardless of if it's visibility
     def _click(self, element):
         self.driver.execute_script("arguments[0].click();", element)
@@ -135,7 +130,10 @@ class Crawler:
         elem_arr = self.driver.find_elements_by_xpath("//li[@class='day']//ul[@class='items']//li[@class='food text-links']"
                                                   " | //li[@class='day']//h3[@class='day-label']")
 
-        return self._element_text(elem_arr)
+        for i, item in enumerate(elem_arr):
+            elem_arr[i] = item.text
+
+        return elem_arr
 
     # Get menus in dict form
     def get_info(self):
