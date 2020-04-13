@@ -60,6 +60,7 @@ class Crawler:
         # Adds the breakfast foods to the crawler's menu
         self.menu.append(self._package(week))
 
+        del week
         print("Crawler: Got Breakfast Data")
 
         # --------------------- Lunch ------------------------
@@ -75,6 +76,7 @@ class Crawler:
         # Add the Lunch menu to the crawler's menu
         self.menu.append(self._package(week))
 
+        del week
         print("Crawler: Got Lunch Data")
 
         # --------------------- Dinner ------------------------
@@ -90,6 +92,7 @@ class Crawler:
         # Add the Dinner menu to the crawler's menu
         self.menu.append(self._package(week))
 
+        del week
         print("Crawler: Got Dinner data")
 
     # TODO: Delete entries with empty brackets, []
