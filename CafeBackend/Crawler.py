@@ -29,23 +29,23 @@ class Crawler:
         self.driver.get('https://avonoldfarms.flikisdining.com/menu/avon-old-farms?mode=browse')
 
         # Click on a button to go to the menus
-        self.driver.implicitly_wait(10)
+        self.driver.implicitly_wait(15)
         self._click(self.driver.find_element_by_xpath("//button[@class='primary']"))
 
         print("Crawler: Navigated to website")
 
         # --------------------- Breakfast ------------------------
         # Select the breakfast menu from the list of menus
-        self.driver.implicitly_wait(10)
+        self.driver.implicitly_wait(15)
         self._click(self.driver.find_element_by_xpath("//li[@class='menu-item']//a"))
 
         # TODO: Comment this out to reflect the correct menu for this week
 
-        wait = WebDriverWait(self.driver, 10)
+        wait = WebDriverWait(self.driver, 15)
 
         for _ in range(6):
             wait.until(EC.invisibility_of_element_located((By.CLASS_NAME, 'loading')))
-            self.driver.implicitly_wait(10)
+            self.driver.implicitly_wait(15)
             self._click(self.driver.find_element_by_xpath("//li[@class='arrow']//a"))
 
         print("Crawler: Navigated to Breakfast")
@@ -55,6 +55,7 @@ class Crawler:
         # Select(self.driver.find_element_by_xpath("//select")).select_by_index(2)
 
         # Get the information from the web menus
+        self.driver.implicitly_wait(15)
         week = self._get_menu()
 
         # Adds the breakfast foods to the crawler's menu
@@ -65,12 +66,13 @@ class Crawler:
 
         # --------------------- Lunch ------------------------
         # Go to the Lunch menu
-        self.driver.implicitly_wait(10)
+        self.driver.implicitly_wait(15)
         self._click(self.driver.find_elements_by_xpath("//ul[@class='nav-content']//li//a")[1])
 
         print("Crawler: Navigated to Lunch website")
 
         # Get the foods and dates from the Lunch menu
+        self.driver.implicitly_wait(15)
         week = self._get_menu()
 
         # Add the Lunch menu to the crawler's menu
@@ -81,12 +83,13 @@ class Crawler:
 
         # --------------------- Dinner ------------------------
         # Go to the Dinner menu
-        self.driver.implicitly_wait(10)
+        self.driver.implicitly_wait(15)
         self._click(self.driver.find_elements_by_xpath("//ul[@class='nav-content']//li//a")[2])
 
         print("Crawler: Navigated to Dinner website")
 
         # Get the foods and dates from the Dinner menu
+        self.driver.implicitly_wait(15)
         week = self._get_menu()
 
         # Add the Dinner menu to the crawler's menu
@@ -118,15 +121,15 @@ class Crawler:
     # Simplifies the process of getting the foods from the menus
     def _get_menu(self):
         # Make sure that the food items in the web menu are there
-        self.driver.implicitly_wait(10)
+        self.driver.implicitly_wait(15)
         self.driver.find_elements_by_xpath("//li[@class='day']//ul[li[@class='food text-links']]//a")
 
         # Make sure that the dates on the web menu are there
-        self.driver.implicitly_wait(10)
+        self.driver.implicitly_wait(15)
         self.driver.find_elements_by_xpath("//li[@class='day']//h3")
 
         # Get the food items and dates from the web menu
-        self.driver.implicitly_wait(10)
+        self.driver.implicitly_wait(15)
         elem_arr = self.driver.find_elements_by_xpath("//li[@class='day']//ul[@class='items']//li[@class='food text-links']"
                                                   " | //li[@class='day']//h3[@class='day-label']")
 
