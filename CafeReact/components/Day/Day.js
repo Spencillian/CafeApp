@@ -40,7 +40,7 @@ export default class Day extends React.Component{
             connectionError: false
         })
         try{
-            const response = await fetch(`https://88a07c86.ngrok.io/cafeapi/food?day=${this.state.todayNum}`);
+            const response = await fetch(`https://e82437da.ngrok.io/cafeapi/food?day=${this.state.todayNum}`);
             const data = await response.json();
             this.setState({
                 data: data,
