@@ -44,7 +44,7 @@ export default class Day extends React.Component{
             const response = await fetch(`https://raw.githubusercontent.com/MovoLovo/CafeApp/master/CafeReact/fetch.json`);
             const data = await response.json();
             this.setState({
-                tunnelLocation: data,
+                tunnelLocation: data[0],
             });
         } catch (error){
             console.log(error);
@@ -55,7 +55,7 @@ export default class Day extends React.Component{
             return;
         }
         try{
-            const response = await fetch(`https://e82437da.ngrok.io/cafeapi/food?day=${this.state.todayNum}`);
+            const response = await fetch(`https://${this.state.tunnelLocation}.ngrok.io/cafeapi/food?day=${this.state.todayNum}`);
             const data = await response.json();
             this.setState({
                 data: data,
