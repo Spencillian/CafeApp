@@ -1,16 +1,44 @@
 import datetime
 from Crawler import Crawler
+import json
+import os.path
 
 
 # Database that manages the data for the API
 class CafeBase:
     def __init__(self):
-        with Crawler() as c:
-            c.nav()
-            self.base = c.get_info()
 
-            print("Database: Initiated Data Collection")
+        # Checks to see if a json file with the data for the week exists
+        # TODO: Check if the file is up to date
+        if os.path.isfile('data.json'):
+            # Reads the data from the file into a variable
+            with open('data.json', 'r') as f:
+                self.base = json.load(f)
+            print("Database: Retrieved data from file")
+        else:
+            # Run the Crawler a max of 5 times for more stability in case of unstable internet
+            for i in range(4):
+                try:
+                    # Release Crawler
+                    with Crawler() as c:
+                        # Navigate and collect data
+                        c.nav()
 
+                        # Set data to variable
+                        self.base = c.get_info()
+
+                        # Write the data to a file for future reference
+                        with open('data.json', 'w') as f:
+                            json.dump(self.base, f)
+                    # Break if all of the above works successfully
+                    print(f"Database: Retrieved data from Crawler on try #{i}")
+                    break
+                except:
+                    # This means that something failed and the program has to retry
+                    print(f"Database: Something went wrong, loading data retry #{i}")
+                    pass
+
+        print("Database: Initiated Data Collection")
 
     # For future use of the app wants menus based on time
     @staticmethod
@@ -43,7 +71,7 @@ class CafeBase:
 
     # Test method for testing the return values of the database
     def test(self):
-        print(self.day_menu(0))
+        print(self.base)
 
 
 if __name__ == '__main__':
