@@ -25,6 +25,7 @@ export default class Day extends React.Component{
             nav: props.nav,
             connectionError: false,
             lastRefresh: Date(Date.now()).toString(),
+            tunnelLocation: "",
         }
 
         this.refreshScreen = this.refreshScreen.bind(this)
