@@ -25,6 +25,7 @@ export default class Day extends React.Component{
             nav: props.nav,
             connectionError: false,
             lastRefresh: Date(Date.now()).toString(),
+            tunnelLocation: "",
         }
 
         this.refreshScreen = this.refreshScreen.bind(this)
@@ -39,6 +40,20 @@ export default class Day extends React.Component{
             isLoading: true,
             connectionError: false
         })
+        try{
+            const response = await fetch(`https://raw.githubusercontent.com/MovoLovo/CafeApp/master/CafeReact/fetch.json`);
+            const data = await response.json();
+            this.setState({
+                tunnelLocation: data,
+            });
+        } catch (error){
+            console.log(error);
+            this.setState({
+                connectionError: true,
+                isLoading: false,
+            })
+            return;
+        }
         try{
             const response = await fetch(`https://e82437da.ngrok.io/cafeapi/food?day=${this.state.todayNum}`);
             const data = await response.json();
